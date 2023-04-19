@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 import configparser
 import time
 
@@ -19,29 +20,17 @@ driver.get("https://www.pinterest.com/login/")
 # Wait for the login form to load
 time.sleep(5)
 
-# Click on the "Continue with Google" button
-# google_button = driver.find_element(By.XPATH, "/html/body/div/div/div[2]")
-google_button = driver.find_element(By.XPATH, "/html/body/div/div")
-google_button.click()
+email_input_elem = driver.find_element(By.ID, "email")
+email_input_elem.send_keys(PINTEREST_EMAIL)
 
-# Switch to the Google login window
-driver.switch_to.window(driver.window_handles[-1])
+# Tab to password
+password_input_element = driver.find_element(By.ID, "password")
+password_input_element.send_keys(PINTEREST_PASSWORD)
+time.sleep(0.5)
 
-# Find the email field and enter your Google email
-email_field = driver.find_element(By.NAME, "identifier")
-email_field.send_keys(PINTEREST_EMAIL)
-email_field.send_keys(Keys.RETURN)
+login_element = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div[3]/div/div/div[3]/form/div[7]/button")
 
-# Wait for the password field to load
-time.sleep(5)
-
-# Find the password field and enter your Google password
-password_field = driver.find_element(By.NAME, "Passwd")
-password_field.send_keys(PINTEREST_PASSWORD)
-password_field.send_keys(Keys.RETURN)
-
-# Switch back to the Pinterest window
-driver.switch_to.window(driver.window_handles[0])
+login_element.click()
 
 # Wait for the dashboard to load
 time.sleep(10)
