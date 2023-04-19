@@ -2,14 +2,17 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-grid_url = "http://localhost:4444/wd/hub"
+
 
 capabilities = DesiredCapabilities.CHROME.copy()
-capabilities["platform"] = "MAC"
+capabilities["platform"] = "LINUX"
+
+chrome_options = Options()
+chrome_options.add_experimental_option("detach", True)
 
 driver = webdriver.Remote(
     command_executor=grid_url,
-    options = webdriver.ChromeOptions()
+    options = chrome_options
 )
 
 print("before get")
