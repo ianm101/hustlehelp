@@ -3,6 +3,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+import logging as lg
+
+lg.basicConfig(filename="lastrun.log", encoding="utf-8", level=lg.DEBUG)
 
 from pinterest_login import pinterest_login
 from check_pinterest_messages import check_messages
