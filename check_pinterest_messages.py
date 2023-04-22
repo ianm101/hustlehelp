@@ -9,12 +9,15 @@ import logging as lg
 MAX_TIMEOUT = 120
 
 def check_messages(driver):
+    # -- from home page enter messages sidewindow --
     lg.info("Entering check messages function")
     messages_button = driver.find_element(
         By.XPATH, 
         "/html/body/div[2]/div[1]/div/div[1]/div[2]/div/div/div[2]/div/div/div/div[6]/div[3]/div/div/div/div"
         )
     messages_button.click()
+
+    # -- find messages container --
     lg.info("[check_messages] Searching for messages container")
     msgs_container = WebDriverWait(driver, timeout=MAX_TIMEOUT).until(
         lambda driver: driver.find_element(
@@ -28,7 +31,7 @@ def check_messages(driver):
     msgs_elements[0].click()
 
 
-    # get messages container
+    # -- get messages container --
     lg.info("[check messages] Searching for individual messages container")
     individual_message_container = WebDriverWait(driver, timeout=MAX_TIMEOUT).until(
         lambda driver: driver.find_element(
@@ -37,15 +40,23 @@ def check_messages(driver):
         ))
     lg.info("[check messages] Found individual messages container")
 
-    # Should be able to identify all messages (html elements) via this class
+    # -- Get name of person we are chatting with --
+    chat_recipient = WebDriverWait(driver, timeout=MAX_TIMEOUT).until(
+        lambda driver: driver.find_element(By.XPATH, "/html/body/div[2]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div[2]/div/div/div[1]/a")
+    )
+    print(f'Chat recipient: {chat_recipient.text}')
+
+
     lg.info("[check messages] Searching for individual message items")
     individual_message_messages = WebDriverWait(individual_message_container, timeout=MAX_TIMEOUT).until(
         lambda driver: driver.find_elements(
-        By.TAG_NAME,"span"
+        By.XPATH, "./child::div"
         ))
+    
+    all_messages = []
+    for msg in individual_message_messages:
+        all_messages.append(msg.text)
+    
     lg.info("[check messages] Found individual messages")
-
-    for individ_msg in individual_message_messages:
-        print(f'Individual Message Text: {individ_msg.text}')
     
     lg.info("Exiting check messages function")
