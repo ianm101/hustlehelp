@@ -27,6 +27,4 @@ pinterest_login(driver)
 # check messages 
 check_messages(driver)
 
-print(driver.title)
-
 print("done")

@@ -44,7 +44,7 @@ def check_messages(driver):
     chat_recipient = WebDriverWait(driver, timeout=MAX_TIMEOUT).until(
         lambda driver: driver.find_element(By.XPATH, "/html/body/div[2]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div[2]/div/div/div[1]/a")
     )
-    print(f'Chat recipient: {chat_recipient.text}')
+    print(f'Chat recipient: {chat_recipient.text}\n')
 
 
     lg.info("[check messages] Searching for individual message items")
@@ -56,6 +56,10 @@ def check_messages(driver):
     all_messages = []
     for msg in individual_message_messages:
         all_messages.append(msg.text)
+
+    print("\n\n")
+    for i, msg in enumerate(all_messages):
+        print(f"Message {i}: {msg}")
     
     lg.info("[check messages] Found individual messages")
     
